@@ -1,17 +1,14 @@
 var express = require('express');
-var https = require('https');
+var fs = require('fs-extra');
 
-var port = 5000;
-var PORT = process.env.PORT || 4000;
-var HOST = process.env.HOST || '';
+var HTTP_PORT = 4000;
 
 var app = express();
-var server = app.listen(port);
+var server = app.listen(HTTP_PORT);
 
 app.use(express.static('public'));
 
+
 if (server) {
-  console.log(" ");
-  console.log("----------------------------------");
-  console.log("http  server running at port: " + port);
+  console.log("\nhttp  server running at port: " + HTTP_PORT);
 }
