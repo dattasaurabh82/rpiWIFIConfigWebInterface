@@ -10,7 +10,7 @@ var server = app.listen(HTTP_PORT);
 app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Initialize wifi module
@@ -33,6 +33,7 @@ app.post('/scan', function(req, res) {
 	    for(var id=0; id<networks.length; id++){
 	    	ssids.push(String(networks[id].ssid));
 	    }
+	    console.log('network scanned: \n');
 	    console.log(ssids);
 
 	    // send the data to browser
@@ -40,6 +41,19 @@ app.post('/scan', function(req, res) {
     	res.status(200).send(ssids);
 	  }
 	});
+});
+
+
+app.post('/validWIFICreds', function(req, res) {
+	wifiData = req.body;
+	console.log(wifiData);
+
+	if(wifiData.ssid.length != 0 && wifiData.psk.length != 0){
+		res.status(200).send('OK');
+		console.log("SSID: " + wifiData.ssid);
+		console.log("PSK: " + wifiData.psk);
+	}
+	
 });
 
 

@@ -5,23 +5,12 @@ const WIFI_PARAMS = {
   WIFI_PSWD: 'WPA/WPA2 PSK'
 };
 
+
+
 const pane = new Tweakpane({
   title: 'CONFIGURE WIFI',
 });
 
-
-
-// pane.addInput(WIFI_PARAMS, 'WIFI_SSID', {
-// 	options: {
-// 		scanning: ssidlist,
-// 	}
-// });
-
-
-// pane.addInput(WIFI_PARAMS, 'WIFI_PSWD').on('change', (value) => {
-// 	console.log('wifi psk: ' + String(value));
-// 	pane.refresh();	
-// });
 
 
 function fillSSID(SSIDARRAY){
@@ -59,9 +48,29 @@ function fillSSID(SSIDARRAY){
 		// send the wifi data
 		if (wifiCreds.ssid.length != 0  && wifiCreds.psk.length != 0){
 			console.log(wifiCreds);
+
+			// send this data to server
+			$.ajax({
+				type: "POST",
+        		url: "/validWIFICreds",
+        		data: wifiCreds,
+        		success: function(data){
+        			if(data === 'OK'){
+        				console.log('wifi data received on server side succfully!');
+
+        				// change the background banner gif
+        				$(".background_img").attr("src","assets/connecting.webp");
+        			}
+        		},
+        		error: function(err){
+		        	console.log(err);
+		        }
+			});
 		}
   	});
 }
+
+
 
 
 window.addEventListener('load', function() {
