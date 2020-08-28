@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Initialize wifi module
-// Absolutely necessary even to set interface to null
 wifi.init({
   iface: null // network interface, choose a random wifi interface if set to null
 });
